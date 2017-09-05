@@ -4,25 +4,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Connector {
-    static Connection connectionServer,  connectDB;
-    static Statement stateServ,  stateDB;
+class Connector {
+    private static Statement stateServ, stateDB;
 
-    static int  VINNITSYA = 0, CHMELNYTSKY = 1;
+    private static final String urlVINNITSYA = "jdbc:sqlserver://mssql4.1gb.ua;instance=MSSQLSERVER;database=1gb_x_rozklad";
+    private static final String USER_NAME_VINNITSYA = "1gb_monp", USER_PASSWORD_VINNITSYA = "b7925a08yu";
 
-    static final String urlVINNITSYA = "jdbc:sqlserver://mssql4.1gb.ua;instance=MSSQLSERVER;database=1gb_x_rozklad";
-    static final String USER_NAME_VINNITSYA = "1gb_monp", USER_PASSWORD_VINNITSYA = "b7925a08yu";
-
-    static final String urlCHMELNYTSKY = "jdbc:sqlserver://mssql4.1gb.ua;instance=MSSQLSERVER;database=1gb_x_khm";
-    static final String USER_NAME_CHMELNYTSKY = "1gb_khm", USER_PASSWORD_CHMELNYTSKY = "d65c566d4789";
+    private static final String urlCHMELNYTSKY = "jdbc:sqlserver://mssql4.1gb.ua;instance=MSSQLSERVER;database=1gb_x_khm";
+    private static final String USER_NAME_CHMELNYTSKY = "1gb_khm", USER_PASSWORD_CHMELNYTSKY = "d65c566d4789";
 
 
-    public void connectServer(int TYPE_DB) {
+    void connectServer(int TYPE_DB) {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            if (TYPE_DB == CHMELNYTSKY)
-            connectionServer = DriverManager.getConnection(urlCHMELNYTSKY, USER_NAME_CHMELNYTSKY, USER_PASSWORD_CHMELNYTSKY);
-            else connectionServer = DriverManager.getConnection(urlVINNITSYA, USER_NAME_VINNITSYA, USER_PASSWORD_VINNITSYA);
+            Connection connectionServer;
+            if (TYPE_DB == Main.CHMELNYTSKY)
+                connectionServer = DriverManager.getConnection(urlCHMELNYTSKY, USER_NAME_CHMELNYTSKY, USER_PASSWORD_CHMELNYTSKY);
+            else
+                connectionServer = DriverManager.getConnection(urlVINNITSYA, USER_NAME_VINNITSYA, USER_PASSWORD_VINNITSYA);
             stateServ = connectionServer.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
         } catch (Exception e) {
@@ -31,19 +30,22 @@ public class Connector {
     }
 
 
-    public void connectDB(int TYPE_DB) {
+    void connectDB(int TYPE_DB, String absolutePath) {
+        final String CHMELNYTSKY_PATH = String.format("jdbc:sqlite:%s/database_CHMELNYTSKY.db", absolutePath);
+        final String VINNITSYA_PATH = String.format("jdbc:sqlite:%s/database_VINNITSYA.db", absolutePath);
         try {
             Class.forName("org.sqlite.JDBC");
-            if (TYPE_DB == CHMELNYTSKY)
-            connectDB = DriverManager.getConnection("jdbc:sqlite:/home/mike/Desktop/database_CHMELNYTSKY.db");
-            else connectDB = DriverManager.getConnection("jdbc:sqlite:/home/mike/Desktop/database_VINNITSYA.db");
+            Connection connectDB;
+            if (TYPE_DB == Main.CHMELNYTSKY)
+                connectDB = DriverManager.getConnection(CHMELNYTSKY_PATH);
+            else connectDB = DriverManager.getConnection(VINNITSYA_PATH);
             stateDB = connectDB.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ResultSet queryServer(String query) {
+    ResultSet queryServer(String query) {
         ResultSet rs_s = null;
         try {
             rs_s = stateServ.executeQuery(query);
@@ -53,7 +55,7 @@ public class Connector {
         return rs_s;
     }
 
-    public void queryDB(String query) {
+    void queryDB(String query) {
         try {
             stateDB.executeUpdate(query);
         } catch (SQLException e) {
