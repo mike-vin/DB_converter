@@ -1,37 +1,11 @@
-
-import javax.swing.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import config.RootConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
-    static Connector sql = new Connector(), sqlDB = new Connector();
-    private static int TYPE_DB_FROMUSER;
-    private static int VINNITSYA = 0;
-    static int CHMELNYTSKY = 1;
-    private static String[] CITY = {"В И Н Н И Ц А", "Х М Е Л Ь Н И Ц К И Й"};
-
     public static void main(String[] args) {
-        TYPE_DB_FROMUSER = selectDBfromUSER();
-
-        sql.connectServer(TYPE_DB_FROMUSER);
-        sqlDB.connectDB(TYPE_DB_FROMUSER, getAbsolutePath());
-
-        Data.copyDATA();
-
-        JOptionPane.showMessageDialog(null, "Исполнено, мой повелитель!");
-        System.exit(0);
-    }
-
-    private static String getAbsolutePath() {
-        String pathString = System.getProperties().getProperty("user.dir");
-        Path path = Paths.get(pathString);
-        //if (path.getNameCount() > 1) path = path.getParent();
-        return path.toString();
-    }
-
-    private static int selectDBfromUSER() {
-        TYPE_DB_FROMUSER = JOptionPane.showOptionDialog(new JFrame(), "какую базу данных нужно обноаить ?", "Вымерите тип БД:",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, CITY, CITY[0]);
-        return TYPE_DB_FROMUSER;
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
+        System.out.println("selectDBfromUSER = " + OldSchoolMain.selectDBfromUSER());
+        System.out.println("getAbsolutePath = " + OldSchoolMain.getAbsolutePath());
     }
 }

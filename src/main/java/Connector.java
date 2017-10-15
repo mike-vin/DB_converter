@@ -1,24 +1,19 @@
+import connectors.ConnectionProperties;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-class Connector {
+class Connector implements ConnectionProperties {
     private static Statement stateServ, stateDB;
-
-    private static final String urlVINNITSYA = "jdbc:sqlserver://mssql4.1gb.ua;instance=MSSQLSERVER;database=1gb_x_rozklad";
-    private static final String USER_NAME_VINNITSYA = "1gb_monp", USER_PASSWORD_VINNITSYA = "b7925a08yu";
-
-    private static final String urlCHMELNYTSKY = "jdbc:sqlserver://mssql4.1gb.ua;instance=MSSQLSERVER;database=1gb_x_khm";
-    private static final String USER_NAME_CHMELNYTSKY = "1gb_khm", USER_PASSWORD_CHMELNYTSKY = "d65c566d4789";
-
 
     void connectServer(int TYPE_DB) {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connectionServer;
-            if (TYPE_DB == Main.CHMELNYTSKY)
+            if (TYPE_DB == OldSchoolMain.CHMELNYTSKY)
                 connectionServer = DriverManager.getConnection(urlCHMELNYTSKY, USER_NAME_CHMELNYTSKY, USER_PASSWORD_CHMELNYTSKY);
             else
                 connectionServer = DriverManager.getConnection(urlVINNITSYA, USER_NAME_VINNITSYA, USER_PASSWORD_VINNITSYA);
@@ -36,7 +31,7 @@ class Connector {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection connectDB;
-            if (TYPE_DB == Main.CHMELNYTSKY)
+            if (TYPE_DB == OldSchoolMain.CHMELNYTSKY)
                 connectDB = DriverManager.getConnection(CHMELNYTSKY_PATH);
             else connectDB = DriverManager.getConnection(VINNITSYA_PATH);
             stateDB = connectDB.createStatement();

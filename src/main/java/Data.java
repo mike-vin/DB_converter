@@ -3,7 +3,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 class Data {
-    private static Connector sql = Main.sql, sqlDB = Main.sqlDB;
+    private static Connector sql = OldSchoolMain.sql, sqlDB = OldSchoolMain.sqlDB;
     private static ResultSet rs_server;
     private static Date timeStart;
 
