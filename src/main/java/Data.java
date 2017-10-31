@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -8,57 +9,58 @@ public class Data {
     static Date timeStart;
     static long time;
 
-    static void copyDATA(){
-        String SQL_DELETE_route = "DROP TABLE route";
-        sqlDB.queryDB(SQL_DELETE_route);
+    static void copyDATA() {
+        sqlDB.queryDB("DROP TABLE route");
         createTable("route");
         writeData("route");
 
-        String SQL_DELETE_start_time = "DROP TABLE start_time";
-        sqlDB.queryDB(SQL_DELETE_start_time);
+        sqlDB.queryDB("DROP TABLE start_time");
         createTable("StartTime");
         writeData("StartTime");
-        String SQL_RENAME_start_time = "ALTER TABLE StartTime RENAME TO start_time";
-        sqlDB.queryDB(SQL_RENAME_start_time);
+        sqlDB.queryDB("ALTER TABLE StartTime RENAME TO start_time");
 
-        String SQL_DELETE_name_of_station = "DROP TABLE name_of_station";
-        sqlDB.queryDB(SQL_DELETE_name_of_station);
+        sqlDB.queryDB("DROP TABLE name_of_station");
         createTable("NameOfStation");
         writeData("NameOfStation");
-        String SQL_RENAME_name_of_station = "ALTER TABLE NameOfStation RENAME TO name_of_station";
-        sqlDB.queryDB(SQL_RENAME_name_of_station);
+        sqlDB.queryDB("ALTER TABLE NameOfStation RENAME TO name_of_station");
     }
 
     static void createTable(String nameTable) {
         timeStart = new Date();
 
-        String SQL1 = "SELECT * from " + nameTable;
+        String selectFromTableName = "SELECT * from " + nameTable;
         try {
-            rs_server = sql.queryServer(SQL1);
+            rs_server = sql.queryServer(selectFromTableName);
 
-            String SQL2 = "create table " + nameTable + " (";
+            StringBuilder createTableAndCollomns = new StringBuilder("create table " + nameTable + " (");
 
             for (int i = 1; i <= rs_server.getMetaData().getColumnCount(); i++) {
-                if (i == 1) SQL2 += "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, ";
+                if (i == 1) createTableAndCollomns.append("_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, ");
 
                 if (i == rs_server.getMetaData().getColumnCount()) {
-                    SQL2 += rs_server.getMetaData().getColumnName(i);
-                    SQL2 += " " + rs_server.getMetaData().getColumnTypeName(i);
+                    createTableAndCollomns.append(rs_server.getMetaData().getColumnName(i));
+                    createTableAndCollomns.append(" ").append(rs_server.getMetaData().getColumnTypeName(i));
                 } else {
-                    SQL2 += rs_server.getMetaData().getColumnName(i);
-                    SQL2 += " " + rs_server.getMetaData().getColumnTypeName(i) + ", ";
+                    createTableAndCollomns.append(rs_server.getMetaData().getColumnName(i));
+                    createTableAndCollomns.append(" ").append(rs_server.getMetaData().getColumnTypeName(i)).append(", ");
                 }
             }
-            SQL2 += ")";
-            System.out.println();
-            System.out.println(SQL2);
+            createTableAndCollomns.append(")");
+            System.out.println("\n" + createTableAndCollomns);
 
-            sqlDB.queryDB(SQL2);
+            sqlDB.queryDB(createTableAndCollomns.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
+            showErrorMessageDialog(e.getLocalizedMessage());
         }
     }
+
+    private static void showErrorMessageDialog(String exceptionMessage) {
+        JOptionPane.showMessageDialog(null, exceptionMessage);
+
+    }
+
     static void writeData(String name) {
         try {
             String SQL3 = "";
@@ -79,44 +81,44 @@ public class Data {
                     SQL3 += values + ", ";
                 }
             }
-            SQL3 = SQL3.substring(0,SQL3.length() - 2)+ ";";
-            System.out.println();
-            System.out.println(SQL3);
+            SQL3 = SQL3.substring(0, SQL3.length() - 2) + ";";
+            System.out.println("\n" + SQL3);
             sqlDB.queryDB(SQL3);
 
         } catch (SQLException e) {
             e.printStackTrace();
+            showErrorMessageDialog(e.getLocalizedMessage());
         }
         time = (new Date().getTime() - timeStart.getTime()) / 1000;
 
-        System.out.println();
-        System.out.println("=========================================================");
-        System.out.println( name +" -- complete !\n TIME: " + time);
+        System.out.println("\n=========================================================");
+        System.out.println(name + " -- complete !\n TIME: " + time);
         System.out.println("=========================================================");
     }
 
 
     private static String getValues() {
-        String values = "(null,";
-        String change = "";
+        StringBuilder values = new StringBuilder("(null,");
+        String change;
         int myCount = 0;
         try {
             for (int i = 1; i <= rs_server.getMetaData().getColumnCount(); i++) {
                 myCount++;
                 if (rs_server.getString(i).contains("'")) {
-                    change = rs_server.getString(i);
+                    change = rs_server.getString(i).trim();
                     change = change.replace("'", "`");
-                    values += "\'" + change + "\',";
+                    values.append("\'").append(change).append("\',");
                 } else if (myCount == rs_server.getMetaData().getColumnCount()) {
-                    values += "\'" + rs_server.getString(i) + "\')";
+                    values.append("\'").append(rs_server.getString(i).trim()).append("\')");
                     myCount = 0;
                 } else {
-                    values += "\'" + rs_server.getString(i) + "\'" + ",";
+                    values.append("\'").append(rs_server.getString(i).trim()).append("\'").append(",");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showErrorMessageDialog(e.getLocalizedMessage());
         }
-        return values;
+        return values.toString();
     }
-    }
+}
