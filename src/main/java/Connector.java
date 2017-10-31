@@ -17,7 +17,9 @@ public class Connector {
     private static final String USER_PASSWORD_JITOMIR = "b7925a08yu";
 
 
-    public void connectServer(CityType TYPE_DB) throws SQLException {
+    public void connectServer(CityType TYPE_DB) throws Exception {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
         switch (TYPE_DB) {
             case VINNITSA:
                 connectionServer = DriverManager.getConnection(urlVINNITSYA, USER_NAME_VINNITSYA, USER_PASSWORD_VINNITSYA);
@@ -35,7 +37,9 @@ public class Connector {
     }
 
 
-    public void connectDB(CityType TYPE_DB, String localPath) throws SQLException {
+    public void connectDB(CityType TYPE_DB, String localPath) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+
         String jdbcPath = "jdbc:sqlite:%s/%s";
         switch (TYPE_DB) {
             case VINNITSA:
