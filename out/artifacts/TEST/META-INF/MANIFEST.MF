@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: mssql-jdbc-6.1.0.jre8.jar sqlite-jdbc-3.8.11.2.jar
-Main-Class: Main
-
