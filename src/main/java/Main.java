@@ -1,24 +1,20 @@
 import javax.swing.*;
-import java.nio.file.Paths;
 
 public class Main {
-    static Connector sql, sqlDB;
-    static CityType CITY_TYPE;
-    static String[] CITY = {"В И Н Н И Ц А", "Х М Е Л Ь Н И Ц К И Й", "Ж И Т О М И Р"};
+    private static CityType CITY_TYPE;
+    private static String[] CITY = {" ВИННИЦА ", " ХМЕЛЬНИЦКИЙ ", " ЖИТОМИР ", " ДРУГУЮ > "};
 
     public static void main(String[] args) {
         try {
-            sql = new Connector();
-            sqlDB = new Connector();
 
-            CITY_TYPE = selectDBfromUSER();
+            CITY_TYPE = getCityFromUser();
+            ConnectorService connector = new ConnectorService();
+            DataRepository repository = new DataRepository();
 
-            sql.connectServer(CITY_TYPE);
-            sqlDB.connectDB(CITY_TYPE, getLocalPath());
-
-            Data.copyDATA();
+            repository.convertData(connector.getMicrosoftStatement(CITY_TYPE), connector.getSQLightStatement(CITY_TYPE));
 
             JOptionPane.showMessageDialog(null, "Исполнено, мой повелитель!");
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
@@ -26,13 +22,10 @@ public class Main {
         System.exit(0);
     }
 
-    private static String getLocalPath() {
-        return Paths.get(System.getProperties().getProperty("user.dir")).getParent().toString();
-    }
-
-    private static CityType selectDBfromUSER() {
-        int city = JOptionPane.showOptionDialog(new JFrame(), "какую базу данных нужно обноаить ?", "Выберите тип БД:",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, CityType.values(), CityType.values()[0]);
+    private static CityType getCityFromUser() {
+        int city = JOptionPane.showOptionDialog(new JFrame(), "какую базу данных нужно конвертировать ?", "Выберите базу данных:",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, CITY, CITY[0]);
+        assert CITY.length == CityType.values().length;
         return CityType.values()[city];
     }
 }
