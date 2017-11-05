@@ -1,12 +1,12 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="converter:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/converter_jar</output-path>
+  <artifact type="jar" build-on-make="true" name="CONVERTER">
+    <output-path>$PROJECT_DIR$/out/artifacts/CONVERTER</output-path>
     <root id="archive" name="converter.jar">
       <element id="module-output" name="converter" />
       <element id="library" level="project" name="Maven: org.xerial:sqlite-jdbc:3.8.11.2" />
       <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.1.0.jre8" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

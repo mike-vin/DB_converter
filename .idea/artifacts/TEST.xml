@@ -4,9 +4,6 @@
     <root id="root">
       <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.1.0.jre8" />
       <element id="library" level="project" name="Maven: org.xerial:sqlite-jdbc:3.8.11.2" />
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/../../META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="converter" />
     </root>
   </artifact>

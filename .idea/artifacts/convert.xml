@@ -2,13 +2,10 @@
   <artifact type="jar" build-on-make="true" name="convert">
     <output-path>$PROJECT_DIR$/out/artifacts/convert</output-path>
     <root id="archive" name="converter.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="converter" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/xerial/sqlite-jdbc/3.8.11.2/sqlite-jdbc-3.8.11.2.jar" path-in-jar="/" />
-      <element id="dir-copy" path="$USER_HOME$/Документы/mssql-jdbc-6.1.0.jre8/com" />
+      <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
     </root>
   </artifact>
 </component>
