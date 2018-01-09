@@ -107,16 +107,20 @@ public class DataRepository {
         int myCount = 0;
         try {
             for (int i = 1; i <= resultSetMicrosoft.getMetaData().getColumnCount(); i++) {
+
+                String data = resultSetMicrosoft.getString(i);
+                data = data == null ? "" : data;
                 myCount++;
-                if (resultSetMicrosoft.getString(i).contains("'")) {
-                    change = resultSetMicrosoft.getString(i).trim();
+
+                if (data.contains("'")) {
+                    change = data.trim();
                     change = change.replace("'", "`");
                     values.append("\'").append(change).append("\',");
-                } else if (myCount == resultSetMicrosoft.getMetaData().getColumnCount()) {
-                    values.append("\'").append(resultSetMicrosoft.getString(i).trim()).append("\')");
+                } else if (myCount >= resultSetMicrosoft.getMetaData().getColumnCount()) {
+                    values.append("\'").append(data.trim()).append("\')");
                     myCount = 0;
                 } else {
-                    values.append("\'").append(resultSetMicrosoft.getString(i).trim()).append("\'").append(",");
+                    values.append("\'").append(data.trim()).append("\'").append(",");
                 }
             }
         } catch (SQLException e) {
