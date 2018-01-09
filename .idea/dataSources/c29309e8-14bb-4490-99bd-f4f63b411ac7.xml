@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="database_VINNITSYA.db">
+  <database-model serializer="dbm" rdbms="SQLITE" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="main">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <collation id="3" parent="1" name="BINARY"/>
+    <collation id="4" parent="1" name="NOCASE"/>
+    <collation id="5" parent="1" name="RTRIM"/>
+    <table id="6" parent="2" name="name_of_station"/>
+    <table id="7" parent="2" name="route"/>
+    <table id="8" parent="2" name="sqlite_master">
+      <System>1</System>
+    </table>
+    <table id="9" parent="2" name="sqlite_sequence">
+      <System>1</System>
+    </table>
+    <table id="10" parent="2" name="start_time"/>
+    <column id="11" parent="6" name="_id">
+      <DataType>INTEGER|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="12" parent="6" name="NameOfStationID">
+      <Position>1</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="13" parent="6" name="RouteID">
+      <Position>2</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="14" parent="6" name="Name">
+      <Position>3</Position>
+      <DataType>nvarchar|0</DataType>
+    </column>
+    <column id="15" parent="6" name="NumberOfStation">
+      <Position>4</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="16" parent="6" name="Interval">
+      <Position>5</Position>
+      <DataType>time|0</DataType>
+    </column>
+    <index id="17" parent="6" name="sqlite_autoindex_name_of_station_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="18" parent="6">
+      <ColNames>_id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_name_of_station_1</UnderlyingIndexName>
+    </key>
+    <key id="19" parent="6">
+      <ColNames>_id</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_name_of_station_1</UnderlyingIndexName>
+    </key>
+    <column id="20" parent="7" name="_id">
+      <DataType>INTEGER|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="21" parent="7" name="RouteID">
+      <Position>1</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="22" parent="7" name="NameOfRoute">
+      <Position>2</Position>
+      <DataType>nvarchar|0</DataType>
+    </column>
+    <column id="23" parent="7" name="NumberOfRoute">
+      <Position>3</Position>
+      <DataType>nvarchar|0</DataType>
+    </column>
+    <column id="24" parent="7" name="CityID">
+      <Position>4</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="25" parent="7" name="TypeTransportID">
+      <Position>5</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="26" parent="7" name="Number">
+      <Position>6</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <index id="27" parent="7" name="sqlite_autoindex_route_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="28" parent="7">
+      <ColNames>_id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_route_1</UnderlyingIndexName>
+    </key>
+    <key id="29" parent="7">
+      <ColNames>_id</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_route_1</UnderlyingIndexName>
+    </key>
+    <column id="30" parent="8" name="type">
+      <DataType>text|0</DataType>
+    </column>
+    <column id="31" parent="8" name="name">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="32" parent="8" name="tbl_name">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="33" parent="8" name="rootpage">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+    </column>
+    <column id="34" parent="8" name="sql">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="35" parent="9" name="name"/>
+    <column id="36" parent="9" name="seq">
+      <Position>1</Position>
+    </column>
+    <column id="37" parent="10" name="_id">
+      <DataType>INTEGER|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="38" parent="10" name="RouteID">
+      <Position>1</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="39" parent="10" name="Time">
+      <Position>2</Position>
+      <DataType>time|0</DataType>
+    </column>
+    <column id="40" parent="10" name="Weekend">
+      <Position>3</Position>
+      <DataType>bit|0</DataType>
+    </column>
+    <column id="41" parent="10" name="Number">
+      <Position>4</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="42" parent="10" name="WinterTable">
+      <Position>5</Position>
+      <DataType>bit|0</DataType>
+    </column>
+    <column id="43" parent="10" name="InDepot">
+      <Position>6</Position>
+      <DataType>bit|0</DataType>
+    </column>
+    <column id="44" parent="10" name="ShowNumber">
+      <Position>7</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="45" parent="10" name="HideNumber">
+      <Position>8</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="46" parent="10" name="StartTimeID">
+      <Position>9</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="47" parent="10" name="Underline">
+      <Position>10</Position>
+      <DataType>bit|0</DataType>
+    </column>
+    <index id="48" parent="10" name="sqlite_autoindex_start_time_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="49" parent="10">
+      <ColNames>_id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_start_time_1</UnderlyingIndexName>
+    </key>
+    <key id="50" parent="10">
+      <ColNames>_id</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_start_time_1</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
